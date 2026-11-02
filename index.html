@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LexGPT — Inteligência artificial para o jurídico</title>
+<meta name="description" content="Aplicamos inteligência artificial à rotina jurídica — pesquisa, análise e redação — para que escritórios e departamentos decidam com mais rapidez e fundamento." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f5f0;
+    --ink: #14161a;
+    --muted: #5f656d;
+    --faint: #8b9096;
+    --line: #e8e5de;
+    --accent: #0a4435;
+    --accent-soft: #e3ebe6;
+    --on-accent: #ffffff;
+
+    --font-serif: "Newsreader", Georgia, serif;
+    --font-sans: "Instrument Sans", system-ui, sans-serif;
+
+    --radius: 14px;
+    --container: 1120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection { background: var(--accent); color: var(--on-accent); }
+
+  a { color: inherit; text-decoration: none; }
+  img, svg { max-width: 100%; display: block; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Type ---------- */
+  h1, h2, h3, .serif { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
+
+  .lead { font-size: 18px; color: var(--muted); line-height: 1.65; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    white-space: nowrap;
+  }
+  .btn svg { width: 15px; height: 15px; transition: transform 0.18s ease; }
+  .btn:hover svg { transform: translateX(3px); }
+
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: #0f5a46; }
+
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-link:hover { color: var(--accent); border-color: var(--accent); }
+  .btn-link svg { width: 14px; height: 14px; transition: transform 0.18s ease; }
+  .btn-link:hover svg { transform: translateX(3px); }
+
+  /* ---------- Header ---------- */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-serif);
+    font-size: 23px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .nav-logo .mark {
+    width: 9px; height: 9px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+  .nav-links a { font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color 0.15s ease; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-actions { display: flex; align-items: center; gap: 18px; }
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    color: var(--ink);
+    width: 40px; height: 40px;
+  }
+  .nav-toggle svg { width: 22px; height: 22px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 110px 0 100px; }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 6.6vw, 86px);
+    color: var(--ink);
+    margin-top: 26px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    margin-top: 26px;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 520px;
+  }
+  .hero-ctas { margin-top: 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 26px; }
+
+  .evidence-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-soft);
+    padding: 30px;
+    max-width: 420px;
+    justify-self: end;
+    width: 100%;
+  }
+  .evidence-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .evidence-card .q {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .evidence-card .a {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+  .evidence-card .src {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .evidence-card .src .check { font-weight: 700; }
+
+  .hero-stats {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 34px;
+  }
+  .hero-stats .value { font-family: var(--font-serif); font-size: 34px; color: var(--ink); line-height: 1; }
+  .hero-stats .label { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 110px 0; }
+  section.alt { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .section-head { max-width: 720px; margin-bottom: 60px; }
+  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .section-head.center .eyebrow { justify-content: center; }
+  .section-head h2 { font-size: clamp(34px, 4.4vw, 56px); margin-top: 20px; }
+  .section-head p { margin-top: 18px; }
+
+  /* ---------- Before / after ---------- */
+  .beforeafter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .ba-col { padding: 40px 42px; }
+  .ba-col + .ba-col { border-left: 1px solid var(--line); }
+  .ba-col .ba-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .ba-col.hoje .ba-title { color: var(--faint); }
+  .ba-col.comia .ba-title { color: var(--accent); }
+  .ba-col.comia { background: var(--accent-soft); }
+  .ba-col ul { list-style: none; display: grid; gap: 16px; }
+  .ba-col li { font-size: 16px; color: var(--muted); line-height: 1.5; padding-left: 20px; position: relative; }
+  .ba-col li::before { content: ""; position: absolute; left: 0; top: 10px; width: 7px; height: 7px; border-radius: 50%; }
+  .ba-col.hoje li::before { background: var(--faint); }
+  .ba-col.comia li { color: var(--ink); }
+  .ba-col.comia li::before { background: var(--accent); }
+
+  /* ---------- Services (editorial list) ---------- */
+  .services { border-top: 1px solid var(--line); }
+  .service {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    padding: 30px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .service .num { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--faint); }
+  .service h3 { font-size: 24px; color: var(--ink); }
+  .service p { font-size: 15px; color: var(--muted); margin-top: 8px; max-width: 560px; }
+  .service .arrow { color: var(--faint); font-size: 20px; transition: color 0.15s ease, transform 0.18s ease; }
+  .service:hover .arrow { color: var(--accent); transform: translateX(4px); }
+
+  /* ---------- Applications ---------- */
+  .apps { display: flex; flex-wrap: wrap; gap: 12px; }
+  .app {
+    font-size: 14.5px;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 11px 20px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .app:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- Method ---------- */
+  .method { display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px; }
+  .method-step { border-top: 2px solid var(--ink); padding-top: 18px; }
+  .method-step .step-num { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  .method-step h3 { font-size: 19px; margin: 12px 0 8px; }
+  .method-step p { font-size: 14px; color: var(--muted); }
+
+  /* ---------- Plans ---------- */
+  .plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .plan {
+    padding: 46px 46px 50px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan + .plan { border-left: 1px solid var(--line); }
+  .plan.featured { background: var(--bg-soft); }
+  .plan .flag {
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .plan h3 { font-size: 28px; }
+  .plan .tagline { font-size: 15px; color: var(--muted); margin-top: 8px; }
+  .plan .price { margin: 28px 0 4px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .plan .price .amount { font-family: var(--font-serif); font-size: 44px; line-height: 1; color: var(--ink); }
+  .plan .price .from { font-size: 15px; color: var(--muted); }
+  .plan .price .period { font-size: 15px; color: var(--muted); }
+  .plan .note { font-size: 13.5px; color: var(--faint); margin-bottom: 26px; }
+  .plan ul { list-style: none; display: grid; gap: 13px; margin-bottom: 30px; flex: 1; }
+  .plan li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.5px; color: var(--muted); }
+  .plan li .check { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+  /* ---------- About ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .about-item {
+    display: flex;
+    gap: 20px;
+    padding: 22px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .about-item .num { font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--accent); width: 28px; flex-shrink: 0; }
+  .about-item h3 { font-size: 18px; margin-bottom: 4px; }
+  .about-item p { font-size: 14.5px; color: var(--muted); }
+
+  /* ---------- FAQ ---------- */
+  .faq-list { max-width: 780px; margin: 0 auto; border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-q {
+    width: 100%;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 24px 4px;
+    text-align: left;
+    font-family: var(--font-serif);
+    font-size: 21px;
+    color: var(--ink);
+  }
+  .faq-q .plus {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-family: var(--font-sans);
+    font-size: 18px;
+    color: var(--accent);
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+  .faq-item.open .faq-q .plus { transform: rotate(45deg); background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
+  .faq-a-inner { padding: 0 4px 24px; font-size: 15.5px; color: var(--muted); max-width: 680px; }
+
+  /* ---------- CTA ---------- */
+  .cta { text-align: center; padding: 120px 0; }
+  .cta h2 { font-size: clamp(38px, 5.4vw, 68px); max-width: 18ch; margin: 22px auto 0; }
+  .cta h2 em { font-style: italic; color: var(--accent); }
+  .cta p { margin: 20px auto 0; max-width: 520px; color: var(--muted); font-size: 17px; }
+  .cta .cta-actions { margin-top: 36px; display: flex; justify-content: center; align-items: center; gap: 26px; flex-wrap: wrap; }
+
+  /* ---------- Footer ---------- */
+  .footer { border-top: 1px solid var(--line); padding: 64px 0 36px; }
+  .footer-top { display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .footer-brand { font-family: var(--font-serif); font-size: 21px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+  .footer-brand .mark { width: 8px; height: 8px; background: var(--accent); display: inline-block; }
+  .footer-tagline { color: var(--faint); font-size: 14px; margin-top: 10px; max-width: 320px; }
+  .footer-links { display: flex; gap: 56px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--faint); margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: grid; gap: 10px; }
+  .footer-col a { font-size: 14px; color: var(--muted); transition: color 0.15s ease; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    margin-top: 56px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    font-size: 13px; color: var(--faint);
+  }
+
+  /* ---------- Reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .evidence-card { justify-self: start; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .beforeafter { grid-template-columns: 1fr; }
+    .ba-col + .ba-col { border-left: none; border-top: 1px solid var(--line); }
+    .method { grid-template-columns: repeat(3, 1fr); }
+    .plans-grid { grid-template-columns: 1fr; }
+    .plan + .plan { border-left: none; border-top: 1px solid var(--line); }
+    .about-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    section { padding: 76px 0; }
+    .hero { padding: 76px 0 68px; }
+    .nav-links, .nav-actions .btn { display: none; }
+    .nav-toggle { display: grid; place-items: center; }
+    .nav-links.mobile-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 70px; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 20px 28px 28px;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .method { grid-template-columns: 1fr 1fr; }
+    .service { grid-template-columns: 40px 1fr; }
+    .service .arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================= HEADER ======================= -->
+<header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="nav-logo">LexGPT<span class="mark"></span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#aplicacoes">Aplicações</a></li>
+        <li><a href="#metodologia">Metodologia</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#contato" class="btn btn-primary">Agendar diagnóstico</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow">Consultoria de IA · Jurídico</span>
+        <h1>Menos operação.<br/>Mais <em>estratégia</em>.</h1>
+        <p class="hero-sub">
+          Aplicamos inteligência artificial à rotina jurídica — pesquisa, análise e
+          redação — para que escritórios e departamentos jurídicos decidam com mais
+          rapidez, fundamento e controle.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contato" class="btn btn-primary">Agendar diagnóstico
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#solucoes" class="btn-link">Conhecer as soluções
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="evidence-card reveal">
+        <span class="label">Pesquisa jurídica</span>
+        <div class="q">“Quais precedentes sustentam a tese de prescrição neste caso?”</div>
+        <p class="a">A resposta chega com os acórdãos pertinentes, organizados por pertinência e com referência direta à fonte.</p>
+        <div class="src"><span class="check">✓</span> STJ · REsp 1.234.567 · 2024</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="reveal">
+        <div class="value">R$ 6.000</div>
+        <div class="label">plano Enterprise, por mês — para toda a organização</div>
+      </div>
+      <div class="reveal">
+        <div class="value">R$ 12.000</div>
+        <div class="label">pesquisa jurídica sob medida, a partir de — por projeto</div>
+      </div>
+      <div class="reveal">
+        <div class="value">100%</div>
+        <div class="label">das respostas com fonte verificável</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PROBLEM / OPPORTUNITY ======================= -->
+<section class="alt" id="problema">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O problema</span>
+      <h2>O jurídico evoluiu.<br/>A operação ficou para trás.</h2>
+      <p class="lead">
+        Enquanto a decisão exige cada vez mais estratégia, o dia a dia ainda consome
+        as equipes com o que é operacional. A inteligência artificial inverte essa equação.
+      </p>
+    </div>
+    <div class="beforeafter reveal">
+      <div class="ba-col hoje">
+        <div class="ba-title">Hoje</div>
+        <ul>
+          <li>Horas consumidas por tarefas administrativas e repetitivas</li>
+          <li>Pesquisa e leitura manuais de grandes volumes de documentos</li>
+          <li>Informações dispersas entre sistemas e arquivos</li>
+          <li>Conhecimento que não vira memória da equipe</li>
+        </ul>
+      </div>
+      <div class="ba-col comia">
+        <div class="ba-title">Com a LexGPT</div>
+        <ul>
+          <li>Fluxos repetitivos automatizados de ponta a ponta</li>
+          <li>Análise de documentos em escala, com supervisão profissional</li>
+          <li>Uma base única de conhecimento consultável em linguagem natural</li>
+          <li>Critérios e referências padronizados, com fonte verificável</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SOLUTIONS ======================= -->
+<section id="solucoes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Soluções</span>
+      <h2>O que fazemos.</h2>
+      <p class="lead">
+        Da plataforma à consultoria, cada frente resolve um problema real da rotina jurídica.
+      </p>
+    </div>
+    <div class="services">
+      <div class="service reveal">
+        <span class="num">01</span>
+        <div>
+          <h3>Agentes de IA jurídica</h3>
+          <p>Agentes que executam tarefas específicas, consultam bases de conhecimento e apoiam as equipes nos seus fluxos.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="service reveal">
+        <span class="num">02</span>
+        <div>
+          <h3>Automação de processos</h3>
+          <p>Triagem de demandas, organização de documentos, acompanhamento operacional e integração de sistemas.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="service reveal">
+        <span class="num">03</span>
+        <div>
+          <h3>Análise inteligente de documentos</h3>
+          <p>Extração, classificação e organização de informações em contratos, petições e pareceres.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="service reveal">
+        <span class="num">04</span>
+        <div>
+          <h3>Pesquisa e bases de conhecimento</h3>
+          <p>Consulta em linguagem natural a documentos internos e jurisprudência, sempre com referência às fontes.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="service reveal">
+        <span class="num">05</span>
+        <div>
+          <h3>Copilotos para advogados</h3>
+          <p>Assistentes personalizados para pesquisa, elaboração e análise, com supervisão profissional.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="service reveal">
+        <span class="num">06</span>
+        <div>
+          <h3>Estratégia e implementação</h3>
+          <p>Diagnóstico, desenho da solução, seleção tecnológica, implantação e capacitação das equipes.</p>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= APPLICATIONS ======================= -->
+<section class="alt" id="aplicacoes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Aplicações</span>
+      <h2>Aplicações práticas.</h2>
+    </div>
+    <div class="apps reveal">
+      <span class="app">Análise de contratos</span>
+      <span class="app">Extração de cláusulas</span>
+      <span class="app">Pesquisa em documentos internos</span>
+      <span class="app">Resumo de processos</span>
+      <span class="app">Triagem de demandas</span>
+      <span class="app">Geração assistida de documentos</span>
+      <span class="app">Qualificação de solicitações</span>
+      <span class="app">Consulta a jurisprudência e legislação</span>
+      <span class="app">Automação administrativa</span>
+      <span class="app">Integração com sistemas corporativos</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= METHODOLOGY ======================= -->
+<section id="metodologia">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Metodologia</span>
+      <h2>Como trabalhamos.</h2>
+    </div>
+    <div class="method">
+      <div class="method-step reveal">
+        <span class="step-num">01 · Diagnóstico</span>
+        <h3>Entender</h3>
+        <p>Mapeamos processos e fluxos para identificar onde a IA gera mais impacto.</p>
+      </div>
+      <div class="method-step reveal">
+        <span class="step-num">02 · Desenho</span>
+        <h3>Definir</h3>
+        <p>Desenhamos a solução, a arquitetura e os critérios de sucesso com a sua equipe.</p>
+      </div>
+      <div class="method-step reveal">
+        <span class="step-num">03 · Implantação</span>
+        <h3>Construir</h3>
+        <p>Configuramos agentes, integrações e bases de conhecimento no ambiente real de uso.</p>
+      </div>
+      <div class="method-step reveal">
+        <span class="step-num">04 · Capacitação</span>
+        <h3>Adotar</h3>
+        <p>Treinamos as equipes com playbooks e boas práticas para uma adoção rápida e segura.</p>
+      </div>
+      <div class="method-step reveal">
+        <span class="step-num">05 · Evolução</span>
+        <h3>Evoluir</h3>
+        <p>Acompanhamos resultados, ajustamos fluxos e expandimos a solução com o tempo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PLANS ======================= -->
+<section class="alt" id="planos">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Planos &amp; ofertas</span>
+      <h2>Duas formas de trabalhar conosco.</h2>
+    </div>
+    <div class="plans-grid reveal">
+      <div class="plan">
+        <span class="flag">Plataforma</span>
+        <h3>Enterprise</h3>
+        <p class="tagline">O LexGPT para toda a organização, com governança avançada.</p>
+        <div class="price">
+          <span class="amount">R$ 6.000</span>
+          <span class="period">/mês</span>
+        </div>
+        <p class="note">Assinatura mensal · implantação e módulos sob medida à parte.</p>
+        <ul>
+          <li><span class="check">✓</span> Até 50 usuários ativos no plano inicial</li>
+          <li><span class="check">✓</span> 500 milhões de tokens em prioridade normal</li>
+          <li><span class="check">✓</span> SSO, auditoria e políticas de retenção</li>
+          <li><span class="check">✓</span> Integrações, SLA e suporte prioritário</li>
+          <li><span class="check">✓</span> Chave própria (BYOK) · Taxa LexGPT de 40%</li>
+          <li><span class="check">✓</span> Conecte 600 no Claude e no ChatGPT</li>
+        </ul>
+        <a href="#contato" class="btn btn-ghost" style="width:100%;">Iniciar conversa</a>
+      </div>
+      <div class="plan featured">
+        <span class="flag">Consultoria dedicada</span>
+        <h3>Pesquisa jurídica sob medida</h3>
+        <p class="tagline">Pesquisa aprofundada conduzida por equipe especializada, com fontes verificáveis.</p>
+        <div class="price">
+          <span class="from">a partir de</span>
+          <span class="amount">R$ 12.000</span>
+          <span class="period">/projeto</span>
+        </div>
+        <p class="note">Escopo, cronograma e entregas definidos por projeto.</p>
+        <ul>
+          <li><span class="check">✓</span> Equipe especializada dedicada à sua demanda</li>
+          <li><span class="check">✓</span> Pesquisa de jurisprudência e legislação com referências</li>
+          <li><span class="check">✓</span> Análise de teses, divergências e riscos</li>
+          <li><span class="check">✓</span> Elaboração de pareceres e memoriais</li>
+          <li><span class="check">✓</span> Entrega com rastreabilidade de fontes</li>
+          <li><span class="check">✓</span> Acompanhamento até a conclusão do trabalho</li>
+        </ul>
+        <a href="#contato" class="btn btn-primary" style="width:100%;">Agendar diagnóstico</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ABOUT ======================= -->
+<section id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="eyebrow">Sobre</span>
+        <h2 style="font-size:clamp(32px,4.2vw,50px);margin-top:20px;">Tecnologia com método, não ferramenta solta.</h2>
+        <p class="lead" style="margin-top:18px;">
+          Posicionamos a inteligência artificial como parte da estratégia jurídica —
+          com segurança, supervisão profissional e fontes verificáveis em cada etapa.
+        </p>
+      </div>
+      <div class="about-list reveal">
+        <div class="about-item">
+          <span class="num">01</span>
+          <div>
+            <h3>Supervisão profissional</h3>
+            <p>Toda automação é acompanhada por profissionais do direito. A IA apoia; não substitui.</p>
+          </div>
+        </div>
+        <div class="about-item">
+          <span class="num">02</span>
+          <div>
+            <h3>Fontes verificáveis</h3>
+            <p>Resultados com referências rastreáveis, para fundamentar decisões com confiança.</p>
+          </div>
+        </div>
+        <div class="about-item">
+          <span class="num">03</span>
+          <div>
+            <h3>Segurança e privacidade</h3>
+            <p>SSO, auditoria, políticas de retenção e BYOK para manter o controle dos seus dados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FAQ ======================= -->
+<section class="alt" id="faq">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Dúvidas</span>
+      <h2>Perguntas frequentes.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q">Como funciona o diagnóstico?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Entendemos como a sua equipe trabalha hoje — processos, ferramentas e dores — e identificamos onde a IA gera mais impacto, com um plano de implementação priorizado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Qual a diferença entre Enterprise e Pesquisa sob medida?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">O Enterprise é a assinatura da plataforma para toda a organização. A Pesquisa sob medida é uma consultoria dedicada: uma equipe especializada conduz a pesquisa e entrega o resultado com fontes verificáveis.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">O que está incluído na Pesquisa sob medida?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">A partir de R$ 12.000 por projeto, inclui pesquisa de jurisprudência e legislação, análise de teses e divergências e a elaboração de pareceres ou memoriais, com referências rastreáveis. O escopo é definido antes do início.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso usar minha própria chave (BYOK)?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. No BYOK, você conecta sua chave junto ao provedor do modelo. O provedor cobra o consumo de tokens, e o LexGPT cobra a Taxa LexGPT de 40% sobre esse custo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">A IA substitui os advogados?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. A IA elimina o trabalho operacional para que os profissionais se concentrem em estratégia, argumentação e decisão. Toda solução opera com supervisão profissional.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CTA ======================= -->
+<section class="cta" id="contato">
+  <div class="container">
+    <span class="eyebrow">Próximo passo</span>
+    <h2>O jurídico do futuro começa com <em>inteligência</em>.</h2>
+    <p>Conte como a sua operação trabalha hoje. Desenhamos o caminho para menos operação e mais estratégia.</p>
+    <div class="cta-actions">
+      <a href="mailto:contato@lexgpt.com.br" class="btn btn-primary">Agendar diagnóstico
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="mailto:contato@lexgpt.com.br" class="btn-link">contato@lexgpt.com.br
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">LexGPT<span class="mark"></span></div>
+        <p class="footer-tagline">Inteligência artificial estratégica para transformar a prática jurídica.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#solucoes">Soluções</a></li>
+            <li><a href="#aplicacoes">Aplicações</a></li>
+            <li><a href="#metodologia">Metodologia</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <ul>
+            <li><a href="https://lexgpt.com.br/juris">Juris</a></li>
+            <li><a href="https://lexgpt.com.br/vade">Vade</a></li>
+            <li><a href="https://lexgpt.com.br/legis">Legis</a></li>
+            <li><a href="https://lexgpt.com.br/open">Open</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="https://lexgpt.com.br/planos">Preços</a></li>
+            <li><a href="https://faq.lexgpt.com.br/">Central de ajuda</a></li>
+            <li><a href="mailto:contato@lexgpt.com.br">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · LexGPT · Todos os direitos reservados</span>
+      <span>Uma solução da <a href="https://simulacro.tech/pt/" style="color:var(--accent);">simulacro.tech</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => {
+    io.observe(el);
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach((o) => {
+        o.classList.remove('open');
+        o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+</body>
+</html>
