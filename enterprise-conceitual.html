@@ -2,323 +2,28 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
+<meta name="theme-color" content="#f4f3ee" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LexGPT Enterprise — Devolva sua equipe à advocacia</title>
-<meta name="description" content="O Enterprise reúne pesquisa, análise e redação em uma só plataforma — para que o escritório ganhe controle, segurança e escala, e os advogados voltem ao que importa: o cliente." />
+<title>LexGPT Enterprise – Devolva sua equipe à advocacia</title>
+<meta name="description" content="O LexGPT Enterprise reúne pesquisa, análise e redação, com projetos compartilhados, gestão da equipe e controle de acesso." />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-
-<style>
-  :root {
-    --bg: #ffffff;
-    --bg-soft: #f7f5f0;
-    --ink: #14161a;
-    --muted: #5f656d;
-    --faint: #8b9096;
-    --line: #e8e5de;
-    --accent: #0a4435;
-    --accent-soft: #e3ebe6;
-    --on-accent: #ffffff;
-
-    --font-serif: "Newsreader", Georgia, serif;
-    --font-sans: "Instrument Sans", system-ui, sans-serif;
-
-    --radius: 14px;
-    --container: 1120px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-sans);
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  ::selection { background: var(--accent); color: var(--on-accent); }
-
-  a { color: inherit; text-decoration: none; }
-  img, svg { max-width: 100%; display: block; }
-
-  .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 28px; }
-
-  /* ---------- Type ---------- */
-  h1, h2, h3, .serif { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
-
-  .lead { font-size: 18px; color: var(--muted); line-height: 1.65; }
-
-  /* ---------- Buttons ---------- */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 16px 28px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-    white-space: nowrap;
-  }
-  .btn svg { width: 15px; height: 15px; transition: transform 0.18s ease; }
-  .btn:hover svg { transform: translateX(3px); }
-
-  .btn-primary { background: var(--accent); color: var(--on-accent); }
-  .btn-primary:hover { background: #0f5a46; }
-
-  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-  .btn-ghost:hover { border-color: var(--ink); }
-
-  .btn-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--ink);
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 2px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .btn-link:hover { color: var(--accent); border-color: var(--accent); }
-  .btn-link svg { width: 14px; height: 14px; transition: transform 0.18s ease; }
-  .btn-link:hover svg { transform: translateX(3px); }
-
-  /* ---------- Header ---------- */
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
-  .nav-logo {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--font-serif); font-size: 23px; font-weight: 500;
-    letter-spacing: -0.01em; color: var(--ink);
-  }
-  .nav-logo .mark { width: 9px; height: 9px; background: var(--accent); display: inline-block; }
-  .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
-  .nav-links a { font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color 0.15s ease; }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-actions { display: flex; align-items: center; gap: 18px; }
-  .nav-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--ink); width: 40px; height: 40px; }
-  .nav-toggle svg { width: 22px; height: 22px; }
-
-  /* ---------- Hero ---------- */
-  .hero { padding: 110px 0 96px; }
-  .hero-inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 72px; align-items: center; }
-  .hero h1 { font-size: clamp(46px, 6.2vw, 84px); color: var(--ink); margin-top: 26px; }
-  .hero h1 em { font-style: italic; color: var(--accent); }
-  .hero-sub { margin-top: 26px; font-size: 19px; line-height: 1.65; color: var(--muted); max-width: 520px; }
-  .hero-ctas { margin-top: 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 26px; }
-
-  .manifesto-card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--bg-soft);
-    padding: 36px;
-    max-width: 420px;
-    justify-self: end;
-    width: 100%;
-  }
-  .manifesto-card .label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
-  .manifesto-card .quote {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 30px;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-top: 20px;
-  }
-  .manifesto-card .body { font-size: 15px; color: var(--muted); line-height: 1.6; margin-top: 16px; }
-  .manifesto-card .foot {
-    margin-top: 22px; padding-top: 18px;
-    border-top: 1px solid var(--line);
-    font-size: 14px; color: var(--accent); font-weight: 500;
-  }
-
-  .hero-stats {
-    margin-top: 72px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    border-top: 1px solid var(--line);
-    padding-top: 34px;
-  }
-  .hero-stats .value { font-family: var(--font-serif); font-size: 34px; color: var(--ink); line-height: 1; }
-  .hero-stats .label { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
-
-  /* ---------- Sections ---------- */
-  section { padding: 110px 0; }
-  section.alt { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .section-head { max-width: 760px; margin-bottom: 60px; }
-  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
-  .section-head.center .eyebrow { justify-content: center; }
-  .section-head h2 { font-size: clamp(34px, 4.4vw, 56px); margin-top: 20px; }
-  .section-head p { margin-top: 18px; }
-
-  /* ---------- Pain (conceptual) ---------- */
-  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .pain-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; transition: border-color 0.2s ease, transform 0.2s ease; }
-  .pain-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-  .pain-card .word {
-    font-family: var(--font-serif); font-style: italic;
-    font-size: 22px; color: var(--accent); margin-bottom: 14px;
-  }
-  .pain-card h3 { font-size: 22px; }
-  .pain-card p { font-size: 15px; color: var(--muted); margin-top: 10px; }
-
-  /* ---------- Transformation (editorial list) ---------- */
-  .shift { border-top: 1px solid var(--line); }
-  .shift-item { display: grid; grid-template-columns: 64px 1fr; gap: 24px; align-items: baseline; padding: 30px 4px; border-bottom: 1px solid var(--line); }
-  .shift-item .num { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--faint); }
-  .shift-item h3 { font-size: 24px; color: var(--ink); }
-  .shift-item p { font-size: 15px; color: var(--muted); margin-top: 8px; max-width: 620px; }
-
-  /* ---------- Method ---------- */
-  .method { display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px; }
-  .method-step { border-top: 2px solid var(--ink); padding-top: 18px; }
-  .method-step .step-num { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-  .method-step h3 { font-size: 19px; margin: 12px 0 8px; }
-  .method-step p { font-size: 14px; color: var(--muted); }
-
-  /* ---------- Who ---------- */
-  .who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-  .who-item { padding: 38px 40px; }
-  .who-item + .who-item { border-left: 1px solid var(--line); }
-  .who-item h3 { font-size: 23px; }
-  .who-item p { font-size: 15px; color: var(--muted); margin-top: 10px; }
-
-  /* ---------- Price (conceptual, minimal) ---------- */
-  .price-line {
-    text-align: center;
-    max-width: 620px;
-    margin: 0 auto;
-  }
-  .price-line h2 { font-size: clamp(34px, 4.6vw, 56px); }
-  .price-line h2 em { font-style: italic; color: var(--accent); }
-  .price-line .amount { font-family: var(--font-serif); font-size: 20px; color: var(--ink); margin-top: 22px; }
-  .price-line .amount strong { font-size: 30px; font-weight: 500; }
-  .price-line .note { font-size: 14.5px; color: var(--muted); margin-top: 10px; }
-  .price-line .cta-actions { margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 26px; flex-wrap: wrap; }
-
-  /* ---------- FAQ ---------- */
-  .faq-list { max-width: 780px; margin: 0 auto; border-top: 1px solid var(--line); }
-  .faq-item { border-bottom: 1px solid var(--line); }
-  .faq-q {
-    width: 100%; background: none; border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    padding: 24px 4px; text-align: left;
-    font-family: var(--font-serif); font-size: 21px; color: var(--ink);
-  }
-  .faq-q .plus {
-    flex-shrink: 0; width: 28px; height: 28px;
-    display: grid; place-items: center;
-    border: 1px solid var(--line); border-radius: 50%;
-    font-family: var(--font-sans); font-size: 18px; color: var(--accent);
-    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
-  }
-  .faq-item.open .faq-q .plus { transform: rotate(45deg); background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
-  .faq-a-inner { padding: 0 4px 24px; font-size: 15.5px; color: var(--muted); max-width: 680px; }
-
-  /* ---------- CTA ---------- */
-  .cta { text-align: center; padding: 120px 0; }
-  .cta h2 { font-size: clamp(38px, 5.4vw, 68px); max-width: 20ch; margin: 22px auto 0; }
-  .cta h2 em { font-style: italic; color: var(--accent); }
-  .cta p { margin: 20px auto 0; max-width: 520px; color: var(--muted); font-size: 17px; }
-  .cta .cta-actions { margin-top: 36px; display: flex; justify-content: center; align-items: center; gap: 26px; flex-wrap: wrap; }
-
-  /* ---------- Footer ---------- */
-  .footer { border-top: 1px solid var(--line); padding: 64px 0 36px; }
-  .footer-top { display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
-  .footer-brand { font-family: var(--font-serif); font-size: 21px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-  .footer-brand .mark { width: 8px; height: 8px; background: var(--accent); display: inline-block; }
-  .footer-tagline { color: var(--faint); font-size: 14px; margin-top: 10px; max-width: 320px; }
-  .footer-links { display: flex; gap: 56px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--faint); margin-bottom: 14px; }
-  .footer-col ul { list-style: none; display: grid; gap: 10px; }
-  .footer-col a { font-size: 14px; color: var(--muted); transition: color 0.15s ease; }
-  .footer-col a:hover { color: var(--accent); }
-  .footer-bottom {
-    margin-top: 56px; padding-top: 24px;
-    border-top: 1px solid var(--line);
-    display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-    font-size: 13px; color: var(--faint);
-  }
-
-  /* ---------- Reveal ---------- */
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 1024px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-    .manifesto-card { justify-self: start; }
-    .hero-stats { grid-template-columns: 1fr 1fr; }
-    .pain-grid { grid-template-columns: 1fr; }
-    .method { grid-template-columns: repeat(3, 1fr); }
-    .who { grid-template-columns: 1fr; }
-    .who-item + .who-item { border-left: none; border-top: 1px solid var(--line); }
-  }
-  @media (max-width: 680px) {
-    section { padding: 76px 0; }
-    .hero { padding: 76px 0 68px; }
-    .nav-links, .nav-actions .btn { display: none; }
-    .nav-toggle { display: grid; place-items: center; }
-    .nav-links.mobile-open {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 70px; left: 0; right: 0;
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
-      padding: 20px 28px 28px;
-      gap: 18px;
-      align-items: flex-start;
-    }
-    .hero-stats { grid-template-columns: 1fr 1fr; gap: 22px; }
-    .method { grid-template-columns: 1fr 1fr; }
-    .shift-item { grid-template-columns: 40px 1fr; }
-  }
-</style>
+<link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/cormorant-garamond-wordmark.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="assets/fonts.css" />
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="stylesheet" href="assets/brand.css" />
+<link rel="icon" type="image/svg+xml" href="assets/lex-dark.svg" />
+<link rel="icon" type="image/svg+xml" href="assets/lex-light.svg" media="(prefers-color-scheme: dark)" />
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 <!-- ======================= HEADER ======================= -->
 <header class="header">
   <div class="container">
-    <nav class="nav">
-      <a href="#" class="nav-logo">LexGPT<span class="mark"></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html" class="nav-logo" translate="no">LexGPT</a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#peso">O peso da operação</a></li>
         <li><a href="#muda">O que muda</a></li>
@@ -327,96 +32,65 @@
       </ul>
       <div class="nav-actions">
         <a href="#contato" class="btn btn-primary">Agendar diagnóstico</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-controls="navLinks" aria-expanded="false" type="button">
+          <span class="symbol" aria-hidden="true">☰</span> Menu
         </button>
       </div>
     </nav>
   </div>
 </header>
 
+<main id="conteudo" tabindex="-1">
+
 <!-- ======================= HERO ======================= -->
 <section class="hero">
   <div class="container">
     <div class="hero-inner">
       <div>
-        <span class="eyebrow">LexGPT Enterprise</span>
-        <h1>Devolva sua equipe à <em>advocacia</em>.</h1>
+        <h1>Pesquisa, análise e redação para toda a equipe.</h1>
         <p class="hero-sub">
-          O Enterprise reúne pesquisa, análise e redação em uma só plataforma — para que
-          o escritório ganhe controle, segurança e escala, e os advogados voltem ao que
-          importa: o cliente.
+          O LexGPT Enterprise reúne pesquisa, análise e redação, com projetos compartilhados, gestão da equipe e controle de acesso.
         </p>
         <div class="hero-ctas">
           <a href="#contato" class="btn btn-primary">Agendar diagnóstico
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="symbol" aria-hidden="true">→</span>
           </a>
           <a href="#muda" class="btn-link">Ver o que muda
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="symbol" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
 
-      <div class="manifesto-card reveal">
-        <span class="label">A ideia</span>
-        <div class="quote">“Advogados deveriam advogar.”</div>
-        <p class="body">Não passar o dia procurando, copiando e refazendo o que uma máquina faz em segundos.</p>
-        <div class="foot">O Enterprise devolve esse tempo. O resto é advocacia.</div>
-      </div>
     </div>
 
-    <div class="hero-stats">
-      <div class="reveal">
-        <div class="value">1</div>
-        <div class="label">plataforma para pesquisa, análise e redação</div>
-      </div>
-      <div class="reveal">
-        <div class="value">50</div>
-        <div class="label">usuários — do sócio ao estagiário</div>
-      </div>
-      <div class="reveal">
-        <div class="value">500M</div>
-        <div class="label">tokens, sem contar perguntas</div>
-      </div>
-      <div class="reveal">
-        <div class="value">24/7</div>
-        <div class="label">suporte prioritário, com SLA</div>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ======================= O PESO DA OPERAÇÃO ======================= -->
 <section class="alt" id="peso">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">O peso da operação</span>
-      <h2>Sua equipe está fazendo o trabalho errado.</h2>
+    <div class="section-head">
+      <h2>Tarefas que consomem o tempo da equipe.</h2>
       <p class="lead">
-        Não é falta de talento. É que a operação consome justamente o que o escritório
-        tem de mais caro: o tempo dos seus advogados.
+        Pesquisar, organizar documentos e manter informações acessíveis exige tempo. A implantação começa por essas rotinas.
       </p>
     </div>
     <div class="pain-grid">
-      <div class="pain-card reveal">
-        <div class="word">Talento desperdiçado</div>
-        <h3>Você contrata advogados para pensar.</h3>
-        <p>Eles passam o dia em tarefas repetitivas — procurando jurisprudência, copiando peças, refazendo o que já foi feito.</p>
+      <div class="pain-card">
+        <h3>Tempo dedicado a tarefas repetitivas</h3>
+        <p>Pesquisar jurisprudência, organizar documentos e preparar minutas ocupa parte da rotina da equipe.</p>
       </div>
-      <div class="pain-card reveal">
-        <div class="word">Conhecimento que escapa</div>
-        <h3>O que o escritório aprende mora na cabeça de cada um.</h3>
-        <p>Quando alguém sai, leva junto. E a próxima demanda começa do zero.</p>
+      <div class="pain-card">
+        <h3>Conhecimento disperso entre profissionais</h3>
+        <p>Pesquisas e critérios precisam ficar acessíveis quando a equipe muda ou uma demanda semelhante retorna.</p>
       </div>
-      <div class="pain-card reveal">
-        <div class="word">Qualidade desigual</div>
-        <h3>Cada caso é conduzido de um jeito.</h3>
-        <p>O resultado depende de quem pegou a demanda — e o padrão do escritório vira sorte.</p>
+      <div class="pain-card">
+        <h3>Critérios de trabalho inconsistentes</h3>
+        <p>Sem processos documentados, a revisão e a qualidade das entregas variam entre profissionais.</p>
       </div>
-      <div class="pain-card reveal">
-        <div class="word">Crescer custa caro</div>
-        <h3>Sem estrutura, crescer vira custo, não margem.</h3>
-        <p>Mais casos significa mais gente fazendo trabalho manual, não mais lucro.</p>
+      <div class="pain-card">
+        <h3>Mais demandas para a mesma estrutura</h3>
+        <p>O aumento do volume de casos exige rever processos, distribuir o trabalho e acompanhar a capacidade da equipe.</p>
       </div>
     </div>
   </div>
@@ -425,41 +99,35 @@
 <!-- ======================= O QUE MUDA ======================= -->
 <section id="muda">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">O que muda</span>
-      <h2>O que acontece quando tudo fica no mesmo lugar.</h2>
+    <div class="section-head">
+      <h2>Pesquisa e documentos sob a mesma gestão.</h2>
       <p class="lead">
-        O Enterprise não é mais uma ferramenta. É a estrutura que faltava para o
-        escritório operar com ordem.
+        O Enterprise reúne pesquisa, documentos e gestão da equipe na mesma plataforma.
       </p>
     </div>
     <div class="shift">
-      <div class="shift-item reveal">
-        <span class="num">01</span>
+      <div class="shift-item">
         <div>
-          <h3>Uma única fonte de verdade</h3>
+          <h3>Conhecimento compartilhado</h3>
           <p>Projetos compartilhados e memória da conta: o conhecimento do escritório deixa de depender de quem está presente.</p>
         </div>
       </div>
-      <div class="shift-item reveal">
-        <span class="num">02</span>
+      <div class="shift-item">
         <div>
           <h3>Controle e visibilidade</h3>
-          <p>Gestão e auditoria de tudo o que acontece — você sabe o que a equipe faz, e o padrão deixa de ser sorte.</p>
+          <p>Gestão da equipe e trilhas de auditoria para acompanhar o uso da plataforma.</p>
         </div>
       </div>
-      <div class="shift-item reveal">
-        <span class="num">03</span>
+      <div class="shift-item">
         <div>
-          <h3>Segurança de verdade</h3>
+          <h3>Controle de acesso e retenção</h3>
           <p>SSO, políticas de retenção e chave própria (BYOK) para adotar IA sem abrir mão do controle dos seus dados.</p>
         </div>
       </div>
-      <div class="shift-item reveal">
-        <span class="num">04</span>
+      <div class="shift-item">
         <div>
-          <h3>Escala sem caos</h3>
-          <p>Até 50 usuários, convites ilimitados e 500 milhões de tokens — o escritório cresce sem quebrar o jeito de trabalhar.</p>
+          <h3>Usuários e capacidade de uso</h3>
+          <p>O plano inicial reúne até 50 usuários ativos, convites ilimitados no domínio profissional e 500 milhões de tokens.</p>
         </div>
       </div>
     </div>
@@ -469,55 +137,48 @@
 <!-- ======================= COMO FUNCIONA ======================= -->
 <section class="alt" id="como-funciona">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Como funciona</span>
-      <h2>Nós entramos com tudo.</h2>
+    <div class="section-head">
+      <h2>Como conduzimos a implantação.</h2>
       <p class="lead">
         Do diagnóstico à evolução contínua, cuidamos de cada etapa para que a plataforma
         acompanhe o jeito como o seu escritório trabalha.
       </p>
     </div>
-    <div class="method">
-      <div class="method-step reveal">
-        <span class="step-num">01 · Diagnóstico</span>
-        <h3>Entender</h3>
+    <ol class="method">
+      <li class="method-step">
+        <h3>Diagnóstico</h3>
         <p>Mapeamos rotinas e fluxos para saber onde a operação mais pesa.</p>
-      </div>
-      <div class="method-step reveal">
-        <span class="step-num">02 · Implantação</span>
-        <h3>Configurar</h3>
+      </li>
+      <li class="method-step">
+        <h3>Implantação</h3>
         <p>Conta, equipes, permissões, SSO e retenção sob a mesma gestão.</p>
-      </div>
-      <div class="method-step reveal">
-        <span class="step-num">03 · Integração</span>
-        <h3>Conectar</h3>
+      </li>
+      <li class="method-step">
+        <h3>Integração</h3>
         <p>Integramos sistemas e sua chave própria (BYOK) aos fluxos existentes.</p>
-      </div>
-      <div class="method-step reveal">
-        <span class="step-num">04 · Capacitação</span>
-        <h3>Adotar</h3>
+      </li>
+      <li class="method-step">
+        <h3>Capacitação</h3>
         <p>Treinamos a equipe com playbooks para adoção rápida e segura.</p>
-      </div>
-      <div class="method-step reveal">
-        <span class="step-num">05 · Evolução</span>
-        <h3>Evoluir</h3>
+      </li>
+      <li class="method-step">
+        <h3>Evolução</h3>
         <p>SLA e suporte prioritário para acompanhar e expandir com o tempo.</p>
-      </div>
-    </div>
+      </li>
+    </ol>
   </div>
 </section>
 
 <!-- ======================= PARA QUEM ======================= -->
 <section id="para-quem">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Para quem</span>
+    <div class="section-head">
       <h2>Feito para quem administra jurídico em escala.</h2>
     </div>
-    <div class="who reveal">
+    <div class="who">
       <div class="who-item">
         <h3>Escritórios</h3>
-        <p>Sócios e gestores que querem qualidade padronizada e margem preservada.</p>
+        <p>Sócios e gestores que querem critérios compartilhados e acompanhamento da operação.</p>
       </div>
       <div class="who-item">
         <h3>Departamentos jurídicos</h3>
@@ -534,14 +195,13 @@
 <!-- ======================= PRICE (conceitual) ======================= -->
 <section class="alt" id="investimento">
   <div class="container">
-    <div class="price-line reveal">
-      <span class="eyebrow">Investimento</span>
-      <h2>O custo de uma operação <em>desorganizada</em> é maior.</h2>
+    <div class="price-line">
+      <h2>Condições do plano Enterprise.</h2>
       <div class="amount"><strong>R$ 6.000</strong> /mês</div>
       <p class="note">Até 50 usuários · 30 dias de avaliação na primeira contratação · cancele quando quiser.</p>
       <div class="cta-actions">
         <a href="#contato" class="btn btn-primary">Agendar diagnóstico
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span class="symbol" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
@@ -551,31 +211,30 @@
 <!-- ======================= FAQ ======================= -->
 <section id="faq">
   <div class="container">
-    <div class="section-head center reveal">
-      <span class="eyebrow">Dúvidas</span>
-      <h2>Perguntas frequentes.</h2>
+    <div class="section-head center">
+      <h2>Perguntas frequentes</h2>
     </div>
-    <div class="faq-list reveal">
-      <div class="faq-item">
-        <button class="faq-q">Minha equipe vai precisar de treinamento?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Nós cuidamos disso. A capacitação faz parte da implantação, com playbooks e acompanhamento para que a adoção seja rápida e segura.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">O que acontece com o conhecimento quando alguém sai?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ele fica. Projetos, fontes e documentos passam a viver na memória da conta, não na cabeça de cada um — o escritório para de perder o que aprendeu.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Como garanto a segurança dos dados?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Com SSO, políticas de retenção, auditoria e a opção de usar sua própria chave (BYOK). Você mantém o controle dos dados em cada etapa.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Serve para escritório de qual tamanho?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">O Enterprise foi feito para quem administra jurídico em escala — de escritórios em crescimento a bancas grandes, departamentos jurídicos e órgãos públicos.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Como começa?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Com um diagnóstico. Entendemos o seu contexto e desenhamos a implantação. A primeira contratação começa com 30 dias de avaliação.</div></div>
-      </div>
+    <div class="faq-list">
+      <details class="faq-item" name="perguntas">
+        <summary class="faq-q">Minha equipe vai precisar de treinamento?</summary>
+        <div class="faq-a">Nós cuidamos disso. A capacitação faz parte da implantação, com playbooks e acompanhamento para que a adoção seja rápida e segura.</div>
+      </details>
+      <details class="faq-item" name="perguntas">
+        <summary class="faq-q">O que acontece com o conhecimento quando alguém sai?</summary>
+        <div class="faq-a">Ele fica. Projetos, fontes e documentos passam a viver na memória da conta, não na cabeça de cada um – o escritório para de perder o que aprendeu.</div>
+      </details>
+      <details class="faq-item" name="perguntas">
+        <summary class="faq-q">Como garanto a segurança dos dados?</summary>
+        <div class="faq-a">Com SSO, políticas de retenção, auditoria e a opção de usar sua própria chave (BYOK). Você mantém o controle dos dados em cada etapa.</div>
+      </details>
+      <details class="faq-item" name="perguntas">
+        <summary class="faq-q">Serve para escritório de qual tamanho?</summary>
+        <div class="faq-a">O Enterprise foi feito para quem administra jurídico em escala – de escritórios em crescimento a bancas grandes, departamentos jurídicos e órgãos públicos.</div>
+      </details>
+      <details class="faq-item" name="perguntas">
+        <summary class="faq-q">Como começa?</summary>
+        <div class="faq-a">Com um diagnóstico. Entendemos o seu contexto e desenhamos a implantação. A primeira contratação começa com 30 dias de avaliação.</div>
+      </details>
     </div>
   </div>
 </section>
@@ -583,31 +242,32 @@
 <!-- ======================= CTA ======================= -->
 <section class="cta alt" id="contato">
   <div class="container">
-    <span class="eyebrow">Próximo passo</span>
-    <h2>Sua equipe tem coisa mais importante para fazer <em>do que operar</em>.</h2>
-    <p>Conte como o escritório trabalha hoje. Desenhamos o caminho para devolver seus advogados à advocacia.</p>
+    <h2>Planeje a adoção com a nossa equipe.</h2>
+    <p>Conte como o escritório trabalha hoje. Definimos o escopo e as etapas de implantação.</p>
     <div class="cta-actions">
       <a href="mailto:contato@lexgpt.com.br" class="btn btn-primary">Agendar diagnóstico
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="symbol" aria-hidden="true">→</span>
       </a>
       <a href="mailto:contato@lexgpt.com.br" class="btn-link">contato@lexgpt.com.br
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="symbol" aria-hidden="true">→</span>
       </a>
     </div>
   </div>
 </section>
 
 <!-- ======================= FOOTER ======================= -->
+</main>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
       <div>
-        <div class="footer-brand">LexGPT<span class="mark"></span></div>
-        <p class="footer-tagline">Do fundamento ao documento. Inteligência artificial para pesquisar, analisar e redigir.</p>
+        <div class="footer-brand" translate="no">LexGPT</div>
+        <p class="footer-tagline">Inteligência artificial para pesquisar, analisar e redigir.</p>
       </div>
       <div class="footer-links">
         <div class="footer-col">
-          <h4>Navegação</h4>
+          <h2>Navegação</h2>
           <ul>
             <li><a href="#peso">O peso da operação</a></li>
             <li><a href="#muda">O que muda</a></li>
@@ -616,7 +276,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Produto</h4>
+          <h2>Produto</h2>
           <ul>
             <li><a href="https://lexgpt.com.br/juris">Juris</a></li>
             <li><a href="https://lexgpt.com.br/vade">Vade</a></li>
@@ -625,7 +285,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Empresa</h4>
+          <h2>Empresa</h2>
           <ul>
             <li><a href="https://lexgpt.com.br/planos">Preços</a></li>
             <li><a href="https://faq.lexgpt.com.br/">Central de ajuda</a></li>
@@ -636,45 +296,11 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 · LexGPT · Todos os direitos reservados</span>
-      <span>Uma solução da <a href="https://simulacro.tech/pt/" style="color:var(--accent);">simulacro.tech</a></span>
+      <span>Uma solução da <a href="https://simulacro.tech/pt/">simulacro.tech</a></span>
     </div>
   </div>
 </footer>
 
-<script>
-  // Mobile nav
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
-
-  // Reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach((el) => {
-    io.observe(el);
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
-  });
-
-  // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach((item) => {
-    const q = item.querySelector('.faq-q');
-    const a = item.querySelector('.faq-a');
-    q.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach((o) => {
-        o.classList.remove('open');
-        o.querySelector('.faq-a').style.maxHeight = null;
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        a.style.maxHeight = a.scrollHeight + 'px';
-      }
-    });
-  });
-</script>
+<script src="assets/navigation.js" defer></script>
 </body>
 </html>
